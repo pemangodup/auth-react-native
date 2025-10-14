@@ -5,9 +5,14 @@ import FlatButton from "../ui/FlatButton";
 import { COLORS } from "../../constants/style";
 
 function AuthContent({ isLogin }) {
+  function hehe(credentials) {
+    let { email, password } = credentials;
+    console.log(email + password);
+  }
+
   return (
     <View style={styles.authContent}>
-      <AuthForm isLogin />
+      <AuthForm isLogin={isLogin} onSubmit={hehe} />
       <View>
         <FlatButton>Create new user</FlatButton>
       </View>

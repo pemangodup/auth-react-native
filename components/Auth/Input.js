@@ -11,11 +11,11 @@ function Input({
   isInvalid,
 }) {
   return (
-    <View style={styles.inputContainer}>
+    <View style={[styles.inputContainer, isInvalid && styles.labelInvalid]}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
         style={styles.input}
-        autoCapitalize={false}
+        autoCapitalize="none"
         keyboardType={keyboardType}
         secureTextEntry={secure}
         onChangeText={onUpdateValue}
@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
   label: {
     color: "white",
     marginBottom: 4,
+  },
+  labelInvalid: {
+    color: COLORS.error500,
   },
   input: {
     paddingVertical: 8,
