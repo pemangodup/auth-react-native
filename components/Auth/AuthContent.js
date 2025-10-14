@@ -1,16 +1,15 @@
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
+import AuthForm from "./AuthForm";
+import FlatButton from "../ui/FlatButton";
 import { COLORS } from "../../constants/style";
-import Input from "../../components/Auth/Input";
-import Button from "../ui/Button";
 
-function AuthContent() {
+function AuthContent({ isLogin }) {
   return (
-    <View style={styles.container}>
-      <Input label="Email" />
-      <Input label="Password" />
-      <View style={styles.buttons}>
-        <Button>Login</Button>
+    <View style={styles.authContent}>
+      <AuthForm isLogin />
+      <View>
+        <FlatButton>Create new user</FlatButton>
       </View>
     </View>
   );
@@ -19,7 +18,7 @@ function AuthContent() {
 export default AuthContent;
 
 const styles = StyleSheet.create({
-  container: {
+  authContent: {
     marginTop: 64,
     marginHorizontal: 32,
     borderRadius: 8,
@@ -30,8 +29,5 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.35,
     shadowRadius: 4,
-  },
-  buttons: {
-    marginTop: 12,
   },
 });
