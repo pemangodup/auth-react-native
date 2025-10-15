@@ -1,20 +1,61 @@
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 
 import AuthForm from "./AuthForm";
 import FlatButton from "../ui/FlatButton";
 import { COLORS } from "../../constants/style";
+import { useState } from "react";
 
-function AuthContent({ isLogin }) {
-  function hehe(credentials) {
-    let { email, password } = credentials;
-    console.log(email + password);
+function AuthContent({ isLogin, onAuthenticate }) {
+  const [credentialsInvalid, setCredentialsInvalid] = useState({
+    email: false,
+    password: false,
+    confirmEmail: false,
+    confirmPassword: false,
+  });
+
+  function switchAuthModeHandler() {
+    //Todo
+  }
+
+  function submitHandler(credentials) {
+    let { email, confirmEmail, password, confirmPassword } = credentials;
+
+    email = email.trim();
+    password = password.trim();
+
+    const emailIsInvalid = email.include("@");
+    const passwordIsValid = password.length > 6;
+    const emailsAreEqual = email === confirmEmail;
+    const passwordsAreEqual = password === confirmPassword;
+
+    if (
+      !emailIsInvalid ||
+      !passwordIsValid ||
+      (!isLogin && (!emailsAreEqual || !passwordsAreEqual))
+    ) {
+      Alert.alert("Invlid input", "Please check your entered credentials");
+      setCredentialsInvalid({
+        email: !emailIsInvalid,
+        confirmEmail: !emailIsInvalid || !emailsAreEqual,
+        password: !passwordIsValid,
+        confirmPassword: !passwordIsValid || !passwordsAreEqual,
+      });
+      return;
+    }
+    onAuthenticate({ email, password });
   }
 
   return (
     <View style={styles.authContent}>
-      <AuthForm isLogin={isLogin} onSubmit={hehe} />
-      <View>
-        <FlatButton>Create new user</FlatButton>
+      <AuthForm
+        isLogin={isLogin}
+        onSubmit={submitHandler}
+        credentialsInvalid={credentialsInvalid}
+      />
+      <View style={styles.buttons}>
+        <FlatButton onPress={switchAuthModeHandler}>
+          {isLogin ? "Create a new user" : "Log in instead"}
+        </FlatButton>
       </View>
     </View>
   );
@@ -34,5 +75,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.35,
     shadowRadius: 4,
+  },
+  buttons: {
+    marginTop: 8,
   },
 });
