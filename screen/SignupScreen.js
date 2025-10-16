@@ -1,11 +1,8 @@
-import { View, Text } from "react-native";
+import { createUser } from "../util/http";
+import AuthContent from "../components/Auth/AuthContent";
 
 function SighnupScreen() {
-  return (
-    <View>
-      <Text>SighnupScreen</Text>
-    </View>
-  );
+  return <AuthContent />;
 }
 
 export default SighnupScreen;
