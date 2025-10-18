@@ -30,20 +30,20 @@ function AuthContent({ isLogin, onAuthenticate }) {
     email = email.trim();
     password = password.trim();
 
-    const emailIsInvalid = email.include("@");
+    const emailIsValid = email.includes("@");
     const passwordIsValid = password.length > 6;
     const emailsAreEqual = email === confirmEmail;
     const passwordsAreEqual = password === confirmPassword;
 
     if (
-      !emailIsInvalid ||
+      !emailIsValid ||
       !passwordIsValid ||
       (!isLogin && (!emailsAreEqual || !passwordsAreEqual))
     ) {
       Alert.alert("Invlid input", "Please check your entered credentials");
       setCredentialsInvalid({
-        email: !emailIsInvalid,
-        confirmEmail: !emailIsInvalid || !emailsAreEqual,
+        email: !emailIsValid,
+        confirmEmail: !emailIsValid || !emailsAreEqual,
         password: !passwordIsValid,
         confirmPassword: !passwordIsValid || !passwordsAreEqual,
       });
