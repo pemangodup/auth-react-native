@@ -21,3 +21,10 @@ export function createUser(email, password) {
 export function login(email, password) {
   return authenticate("signInWithPassword", email, password);
 }
+
+export function welcome(token) {
+  return axios.get(
+    "https://react-native-69fe9-default-rtdb.firebaseio.com/message.json?auth=" +
+      token
+  );
+}
